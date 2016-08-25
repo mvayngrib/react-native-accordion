@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
-  Text
+  Text,
+  Platform
 } from 'react-native';
 
 var Accordion = React.createClass({
@@ -39,7 +40,7 @@ var Accordion = React.createClass({
   getInitialState() {
     return {
       is_visible: false,
-      height: 0,
+      height: undefined,
       content_height: 0
     };
   },
@@ -90,6 +91,14 @@ var Accordion = React.createClass({
   },
 
   render() {
+    const style = {}
+    if (Platform.OS !== 'web' || this.state.height !== undefined) {
+      style.height = this.getTweeningValue('height')
+    } else {
+      // hide until content is measured
+      style.zIndex = -1
+    }
+
     return (
       /*jshint ignore:start */
       <View
@@ -107,9 +116,7 @@ var Accordion = React.createClass({
         </TouchableHighlight>
         <View
           ref="AccordionContentWrapper"
-          style={{
-            height: this.getTweeningValue('height')
-          }}
+          style={style}
         >
           <View ref="AccordionContent">
             {this.props.content}
