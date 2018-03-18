@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import tweenState from 'react-tween-state';
 
 import {
@@ -15,15 +16,15 @@ var Accordion = React.createClass({
   mixins: [tweenState.Mixin],
 
   propTypes: {
-    activeOpacity: React.PropTypes.number,
-    animationDuration: React.PropTypes.number,
-    content: React.PropTypes.element.isRequired,
-    easing: React.PropTypes.string,
-    expanded: React.PropTypes.bool,
-    header: React.PropTypes.element.isRequired,
-    onPress: React.PropTypes.func,
-    underlayColor: React.PropTypes.string,
-    style: React.PropTypes.object
+    activeOpacity: PropTypes.number,
+    animationDuration: PropTypes.number,
+    content: PropTypes.element.isRequired,
+    easing: PropTypes.string,
+    expanded: PropTypes.bool,
+    header: PropTypes.element.isRequired,
+    onPress: PropTypes.func,
+    underlayColor: PropTypes.string,
+    style: PropTypes.object
   },
 
   getDefaultProps() {
