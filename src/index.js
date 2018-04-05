@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types'
 import tweenState from 'react-tween-state';
 
@@ -12,10 +12,10 @@ import {
   Platform
 } from 'react-native';
 
-class Accordion extends Component {
-  // static mixins = [tweenState.Mixin];
+var Accordion = React.createClass({
+  mixins: [tweenState.Mixin],
 
-  static propTypes = {
+  propTypes: {
     activeOpacity: PropTypes.number,
     animationDuration: PropTypes.number,
     content: PropTypes.element.isRequired,
@@ -25,35 +25,36 @@ class Accordion extends Component {
     onPress: PropTypes.func,
     underlayColor: PropTypes.string,
     style: PropTypes.object
-  };
+  },
 
-  static defaultProps = {
-    activeOpacity: 1,
-    animationDuration: 300,
-    easing: 'linear',
-    expanded: false,
-    underlayColor: '#000',
-    style: {}
-  };
+  getDefaultProps() {
+    return {
+      activeOpacity: 1,
+      animationDuration: 300,
+      easing: 'linear',
+      expanded: false,
+      underlayColor: '#000',
+      style: {}
+    };
+  },
 
-  constructor(props) {
-    super(props)
-    this.state = {
+  getInitialState() {
+    return {
       is_visible: false,
       height: undefined,
       content_height: 0
     };
-  }
+  },
 
-  close = () => {
+  close() {
     this.state.is_visible && this.toggle();
-  }
+  },
 
-  open = () => {
+  open() {
     !this.state.is_visible && this.toggle();
-  }
+  },
 
-  toggle = () => {
+  toggle() {
     this.state.is_visible = !this.state.is_visible;
 
     this.tweenState('height', {
@@ -61,17 +62,17 @@ class Accordion extends Component {
       duration: this.props.animationDuration,
       endValue: this.state.height === 0 ? this.state.content_height : 0
     });
-  }
+  },
 
-  _onPress = () => {
+  _onPress() {
     this.toggle();
 
     if (this.props.onPress) {
       this.props.onPress.call(this);
     }
-  }
+  },
 
-  _getContentHeight = () => {
+  _getContentHeight() {
     if (this.refs.AccordionContent) {
       this.refs.AccordionContent.measure((ox, oy, width, height, px, py) => {
         // Sets content height in state
@@ -81,14 +82,14 @@ class Accordion extends Component {
         });
       });
     }
-  }
+  },
 
-  componentDidMount = () => {
+  componentDidMount() {
     // Gets content height when component mounts
     // without setTimeout, measure returns 0 for every value.
     // See https://github.com/facebook/react-native/issues/953
     setTimeout(this._getContentHeight);
-  }
+  },
 
   render() {
     const style = {}
@@ -126,8 +127,6 @@ class Accordion extends Component {
       /*jshint ignore:end */
     );
   }
-}
+});
 
-Object.assign(Accordion.prototype, tweenState.Mixin)
-
-export default Accordion
+module.exports = Accordion;
