@@ -36,11 +36,13 @@ class Accordion extends Component {
     style: {}
   };
 
-  state = {
-    is_visible: false,
-    height: undefined,
-    content_height: 0,
-    ...tweenState.Mixin.getInitialState()
+  constructor(props) {
+    super(props)
+    this.state = {
+      is_visible: false,
+      height: undefined,
+      content_height: 0
+    };
   }
 
   close = () => {
