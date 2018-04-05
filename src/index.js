@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import tweenState from 'react-tween-state';
+import createReactClass from 'create-react-class';
 
 import {
   StyleSheet,
@@ -12,7 +13,7 @@ import {
   Platform
 } from 'react-native';
 
-var Accordion = React.createClass({
+var Accordion = createReactClass({
   mixins: [tweenState.Mixin],
 
   propTypes: {
